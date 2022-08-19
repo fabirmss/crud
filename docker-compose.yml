@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: padrao-db
+    network_mode: "bridge"
+    volumes:
+      - ~/.docker-volumes/sistemas/padrao/data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=padrao
+      - MYSQL_PASSWORD=root
+
+  app:
+    image: jjuanrivvera99/ubuntu18.04-apache2-php7.2-oracleclient12.2
+    container_name: padrao-app
+    network_mode: "bridge"
+    volumes:
+      - "./:/var/www/"
+    ports:
+      - "80:80"
+    links:
+      - mysql
